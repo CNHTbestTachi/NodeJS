@@ -1,39 +1,6 @@
-let express = require('express');
-let app = express();
+// let express = require('express');
+// let app = express();
 
+//  module.exports = app;
+console.log("Hello Word");
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- module.exports = app;
