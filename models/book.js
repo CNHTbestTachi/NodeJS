@@ -3,7 +3,7 @@ const pool = require('../config/database');
 const Book = {
     create: async (title, author, categoryId) => {
         const result = await pool.query(
-            'INSERT INTO books (title, author, category_id) VALUES ($1, $2, $3) RETURNING *',
+            'INSERT INTO books (name_book, title, author, description,categoryId ) VALUES ($1, $2, $3, $4,$5) RETURNING *',
             [title, author, categoryId]
         );
         return result.rows[0];

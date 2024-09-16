@@ -1,9 +1,9 @@
 const Book = require('../models/book');
 
 exports.addBook = async (req, res) => {
-    const { title, author, categoryId } = req.body;
+    const {name_book, title, author, description,categoryId } = req.body;
     try {
-        const book = await Book.create(title, author, categoryId);
+        const book = await Book.create(name_book, title, author, description,categoryId);
         res.status(201).json(book);
     } catch (err) {
         res.status(500).json({ message: 'Error adding book' });
