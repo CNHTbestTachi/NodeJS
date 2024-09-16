@@ -1,22 +1,27 @@
-const bcrypt = require('bcryptjs');
+const User = require('../models/user');
 const jwt = require('jsonwebtoken');
-const userModel = require('../models/userModel');
+const bcrypt = require('bcryptjs');
 
 exports.register = async (req, res) => {
-    const { username, password } = req.body;
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const user = await userModel.createUser(username, hashedPassword);
-    res.json({ message: 'User registered', user });
+    const { email, password } = req.body;
+    try {
+        const user = await User.create(email, password);
+        res.status(201).json(user);
+    } catch (err) {
+        res.status(500).json({ message: 'Error creating user' });
+    }
 };
 
 exports.login = async (req, res) => {
-    const { username, password } = req.body;
-    const user = await userModel.getUserByUsername(username);
-    if (!user) return res.status(400).json({ message: 'Invalid username or password' });
-
-    const validPassword = await bcrypt.compare(password, user.password);
-    if (!validPassword) return res.status(400).json({ message: 'Invalid username or password' });
-
-    const token = jwt.sign({ id: user.id }, 'secretKey');
-    res.json({ message: 'Login successful', token });
+    const { email, password } = req.body;
+    try {
+        const user = await User.findByEmail(email);
+        if (!user || !await bcrypt.compare(password, user.password)) {
+            return res.status(400).json({ message: 'Invalid credentials' });
+        }
+        const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        res.json({ token });
+    } catch (err) {
+        res.status(500).json({ message: 'Error logging in' });
+    }
 };

@@ -1,15 +1,8 @@
-const express = require('express');
-const authRoutes = require('./routes/authRoutes');
-const bookRoutes = require('./routes/bookRoutes');
-const categoryRoutes = require('./routes/categoryRoutes');
-const app = express();
+const app = require('./app');
+const pool = require('./config/database');
 
-app.use(express.json());
+const PORT = process.env.PORT || 5000;
 
-app.use('/api/auth', authRoutes);
-app.use('/api', bookRoutes);
-app.use('/api', categoryRoutes);
-
-app.listen(3000, () => {
-    console.log('Server is running on port 3000');
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
 });

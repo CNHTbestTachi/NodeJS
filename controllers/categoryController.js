@@ -1,18 +1,30 @@
-const categoryModel = require('../models/categoryModel');
+const Category = require('../models/category');
 
 exports.addCategory = async (req, res) => {
     const { name } = req.body;
-    const category = await categoryModel.createCategory(name);
-    res.json({ message: 'Category added', category });
+    try {
+        const category = await Category.create(name);
+        res.status(201).json(category);
+    } catch (err) {
+        res.status(500).json({ message: 'Error adding category' });
+    }
 };
 
 exports.getCategories = async (req, res) => {
-    const categories = await categoryModel.getAllCategories();
-    res.json(categories);
+    try {
+        const categories = await Category.findAll();
+        res.json(categories);
+    } catch (err) {
+        res.status(500).json({ message: 'Error retrieving categories' });
+    }
 };
 
 exports.deleteCategory = async (req, res) => {
     const { id } = req.params;
-    await categoryModel.deleteCategoryById(id);
-    res.json({ message: 'Category deleted' });
+    try {
+        await Category.delete(id);
+        res.status(204).json();
+    } catch (err) {
+        res.status(500).json({ message: 'Error deleting category' });
+    }
 };
