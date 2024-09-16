@@ -8,9 +8,10 @@ app.listen(PORT, () => {
     // Optional: Check if the DB connection works properly
     pool.connect((err, client, release) => {
         if (err) {
-            return console.error('Error acquiring client', err.stack);
+            console.error('Error acquiring client', err.stack);
+        } else {
+            console.log('Database connected successfully!');
         }
-        console.log('Connected to PostgreSQL');
         release();
     });
 });
