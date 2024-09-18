@@ -1,9 +1,9 @@
 const Category = require('../models/category');
 
 exports.addCategory = async (req, res) => {
-    const { name } = req.body;
+    const { category_name } = req.body;
     try {
-        const category = await Category.create(name);
+        const category = await Category.create(category_name);
         res.status(201).json(category);
     } catch (err) {
         res.status(500).json({ message: 'Error adding category' });

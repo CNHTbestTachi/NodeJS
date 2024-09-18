@@ -1,10 +1,10 @@
 const pool = require('../config/database');
 
 const Category = {
-    create: async (name) => {
+    create: async (category_name) => {
         const result = await pool.query(
-            'INSERT INTO categories (name) VALUES ($1) RETURNING *',
-            [name]
+            'INSERT INTO categories (category_name) VALUES ($1) RETURNING *',
+            [category_name]
         );
         return result.rows[0];
     },

@@ -15,9 +15,11 @@ app.use('/api/auth', authRoutes);
 app.use('/api/books', bookRoutes);
 app.use('/api/categories', categoryRoutes);
 
+
 // Root Route
 app.get('/', (req, res) => {
     res.send('API is running...');
 });
+
 
 module.exports = app;
